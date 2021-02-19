@@ -12,7 +12,7 @@
 
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
-// import { fetchUser, fetchPosts } from "./fakeApi";
+
 import { findNodeByComponentName, Utils } from "react-fiber-traverse";
 import Tree from "react-d3-tree";
 
