@@ -2,7 +2,7 @@
   "name": "@reactfetchtree/rft",
   "version": "1.5.0",
   "scripts": {
-    "fetch-tree": "node index.js"
+    "fetch-tree": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1"

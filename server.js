@@ -9,6 +9,4 @@ app.use(express.static(path.join(__dirname, "./public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, () => {
-  console.log(`running on port: ${PORT}`);
-});
+app.listen(PORT, () => console.log(`running on port: ${PORT}`));
