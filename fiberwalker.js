@@ -15,8 +15,8 @@ function Node(name) {
 
 const fiberwalker = (
   node,
-  treedata = { name: "App", children: [] },
-  componentStore
+  componentStore,
+  treedata = { name: "App", children: [] }
 ) => {
   if (node.child.sibling) {
     node = node.child.sibling;
@@ -28,20 +28,24 @@ const fiberwalker = (
           //iterate through every entry and check request type
           const dataRequest = componentStore.node.elementType.name;
           for (let key in dataRequest) {
-            if (dataReqArr.includes(dataRequest.key.reqType)) {
+            if (dataReqArr.includes(dataRequest[key].reqType)) {
               currentNode.attributes = {
-                containsFetch: `${dataRequest.key.reqType}`,
+                containsFetch: `${dataRequest[key].reqType}`,
               };
             }
           }
         }
         treedata.children.push(currentNode);
         if (node.child !== null) {
-          fiberwalker(node, treedata.children[treedata.children.length - 1]);
+          fiberwalker(
+            node,
+            componentStore,
+            treedata.children[treedata.children.length - 1]
+          );
         }
       } else {
         if (node.child !== null) {
-          fiberwalker(node, treedata);
+          fiberwalker(node, componentStore, treedata);
         }
       }
     }
@@ -56,39 +60,29 @@ const fiberwalker = (
           //iterate through every entry and check request type
           const dataRequest = componentStore.node.elementType.name;
           for (let key in dataRequest) {
-            if (dataReqArr.includes(dataRequest.key.reqType)) {
+            if (dataReqArr.includes(dataRequest[key].reqType)) {
               currentNode.attributes = {
-                containsFetch: `${dataRequest.key.reqType}`,
+                containsFetch: `${dataRequest[key].reqType}`,
               };
             }
           }
         }
-      treedata.children.push(currentNode);
-      if (node.child != null) {
-        fiberwalker(node, treedata.children[treedata.children.length - 1]);
-      }
-    } else {
-      if (node.child !== null) {
-        fiberwalker(node, treedata);
+        treedata.children.push(currentNode);
+        if (node.child != null) {
+          fiberwalker(
+            node,
+            componentStore,
+            treedata.children[treedata.children.length - 1]
+          );
+        }
+      } else {
+        if (node.child !== null) {
+          fiberwalker(node, componentStore, treedata);
+        }
       }
     }
   }
   return treedata;
 };
-let orgChart;
 
-let __ReactFiberDOM;
-const devTools = global.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-
-devTools.onCommitFiberRoot = (function (original) {
-  return function (...args) {
-    __ReactFiberDOM = args[1];
-    console.log("dom: ", __ReactFiberDOM.current);
-    orgChart = fiberwalker(__ReactFiberDOM.current);
-    console.log("orgChart: ", orgChart);
-
-    return original(...args);
-  };
-})(devTools.onCommitFiberRoot);
-
-module.exports = { fiberwalker, orgChart }
+module.exports = fiberwalker;
