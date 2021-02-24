@@ -20,4 +20,5 @@ export default async function fetchTree(entryFile) {
       return original(...args);
     };
   })(devTools.onCommitFiberRoot);
+  return orgChart;
 }
