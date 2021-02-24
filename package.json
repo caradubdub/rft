@@ -1,6 +1,6 @@
 {
   "name": "@reactfetchtree/rft",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "scripts": {
     "fetch-tree": "node server.js"
   },
