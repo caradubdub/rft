@@ -231,7 +231,5 @@ const dependenciesGraph = (entryFile) => {
   return componentGraph(invocationStore, nodeStore, componentStore);
 };
 
-dependenciesGraph("./src/index.js");
-console.log(componentStore);
-
+//console.log(dependenciesGraph("./App.js"));
 module.exports = { dependenciesGraph };

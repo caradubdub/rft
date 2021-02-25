@@ -1,10 +1,10 @@
 import fiberwalker from "./fiberwalker";
 import dependenciesGraph from "./parser";
 
-export default async function fetchTree(entryFile) {
+async function fetchTree(entryFile) {
   //dependenciesFile run with entryFile
   const componentStore = await dependenciesGraph(entryFile);
-
+  console.log(componentStore);
   let orgChart;
 
   let __ReactFiberDOM;
