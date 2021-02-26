@@ -219,17 +219,22 @@ const dependenciesGraph = (entryFile) => {
       asset.mapping[relativePath] = cache[absolutePath];
     });
   }
-  // console.log(queue[0].dataRequests)
-  // console.log('DATAREQUESTNODES => ', queue[0].dataRequests)
-  // console.log(queue[2].dataRequests)
-  // console.log('COMPONENT STORE => ', componentStore);
-  // console.log('INVOCATION STORE => ', invocationStore);
-  // console.log('NODE STORE => ', nodeStore);
-  // console.log(queue)
-  // console.log(cache);
-
   return componentGraph(invocationStore, nodeStore, componentStore);
 };
 
-console.log(dependenciesGraph("./App.js"));
-module.exports = { dependenciesGraph };
+//TELL THE USER TO INPUT THEIR SOURCE FILE IN THE LINE BELOW
+const resultObj = JSON.stringify(
+  dependenciesGraph(path.join(__dirname, "INSERT SOURCE FILE HERE"))
+);
+// console.log(typeof resultObj);
+const componentObj = `const componentObj = ${resultObj}
+module.exports = { componentObj };`;
+
+fs.writeFileSync(
+  path.join(__dirname, "./componentStore.js"),
+  componentObj,
+  (err) => {
+    if (err) throw err;
+    console.log("The file has been saved");
+  }
+);

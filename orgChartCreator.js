@@ -1,10 +1,8 @@
 import fiberwalker from "./fiberwalker";
-import dependenciesGraph from "./parser";
+import componentObj from "./componentStore";
 
-async function fetchTree(entryFile) {
-  //dependenciesFile run with entryFile
-  const componentStore = await dependenciesGraph(entryFile);
-  console.log(componentStore);
+export default function orgChartCreator() {
+  console.log('hello', componentObj);
   let orgChart;
 
   let __ReactFiberDOM;
@@ -14,7 +12,7 @@ async function fetchTree(entryFile) {
     return function (...args) {
       __ReactFiberDOM = args[1];
       console.log("dom: ", __ReactFiberDOM.current);
-      orgChart = fiberwalker(__ReactFiberDOM.current, componentStore);
+      orgChart = fiberwalker(__ReactFiberDOM.current, componentObj);
       console.log("orgChart: ", orgChart);
 
       return original(...args);
@@ -22,3 +20,8 @@ async function fetchTree(entryFile) {
   })(devTools.onCommitFiberRoot);
   return orgChart;
 }
+
+
+
+
+

@@ -13,6 +13,21 @@ const fiberwalker = (
   componentStore,
   treedata = { name: "App", children: [] }
 ) => {
+  const dataReqArr = [
+    "fetch",
+    "axios",
+    "http",
+    "https",
+    "qwest",
+    "superagent",
+    "XMLHttpRequest",
+  ];
+
+  function Node(name) {
+    this.name = name;
+    this.children = [];
+  }
+
   if (node.child.sibling) {
     node = node.child.sibling;
     let name;
@@ -61,6 +76,7 @@ const fiberwalker = (
               };
             }
           }
+          treedata.children.push(currentNode);
         }
       }
       treedata.children.push(currentNode);
@@ -103,6 +119,7 @@ const fiberwalker = (
               containsFetch: `${dataRequest[key].reqType}`,
             };
           }
+          treedata.children.push(currentNode);
         }
       }
     }
