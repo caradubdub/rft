@@ -1,12 +1,13 @@
 {
   "name": "@reactfetchtree/rft",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "scripts": {
-    "fetch-tree": "node server.js"
+    "create-component-store": "node parser.js"
   },
   "dependencies": {
     "@babel/parser": "^7.13.4",
     "@babel/traverse": "^7.13.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-d3-tree": "^2.0.1"
   }
 }
