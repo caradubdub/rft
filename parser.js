@@ -114,8 +114,11 @@ const getDependencies = (filename) => {
   //Traverse AST using babeltraverse to identify imported nodes
   traverse(raw_ast, {
     ImportDeclaration: ({ node }) => {
-      if (node.source.value.indexOf("./") !== -1)
-        dependencies.push(node.source.value);
+      if (node.source.value.indexOf('./') !== -1) {
+        if (node.specifiers.length !== 0) {
+          dependencies.push(node.source.value);
+        }
+      }
     },
     Function(path) {
       if (path.node.id) {
@@ -224,7 +227,7 @@ const dependenciesGraph = (entryFile) => {
 
 //TELL THE USER TO INPUT THEIR SOURCE FILE IN THE LINE BELOW
 const resultObj = JSON.stringify(
-  dependenciesGraph(path.join(__dirname, "../../../src/index.js"))
+  dependenciesGraph(path.join(__dirname, "../../../INSERT SOURCE FILE HERE"))
 );
 // console.log(typeof resultObj);
 const componentObj = `const componentObj = ${resultObj}
