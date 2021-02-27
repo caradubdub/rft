@@ -49,7 +49,7 @@ const getDependencies = (filename) => {
         parentName
       );
       dataRequests.push(dataRequest);
-      nodeStore[JSON.stringify(nodePosition)] = {
+      nodeStore[`line: ${nodePosition['line']}, column: ${nodePosition['column']}`] = {
         reqType: reqName,
         parentName,
       };
@@ -93,7 +93,7 @@ const getDependencies = (filename) => {
     ReturnStatement: ({ node }) => {
       if (node.argument) {
         if (
-          node.argument.type === "JSXElement" &&
+          node.argument.type === "JSXElement" || node.argument.type === "JSXFragment" &&
           parentName &&
           !componentStore.hasOwnProperty(parentName)
         ) {
@@ -114,8 +114,11 @@ const getDependencies = (filename) => {
   //Traverse AST using babeltraverse to identify imported nodes
   traverse(raw_ast, {
     ImportDeclaration: ({ node }) => {
-      if (node.source.value.indexOf("./") !== -1)
-        dependencies.push(node.source.value);
+      if (node.source.value.indexOf('./') !== -1) {
+        if (node.specifiers.length !== 0) {
+          dependencies.push(node.source.value);
+        }
+      }
     },
     Function(path) {
       if (path.node.id) {
@@ -224,11 +227,11 @@ const dependenciesGraph = (entryFile) => {
 
 //TELL THE USER TO INPUT THEIR SOURCE FILE IN THE LINE BELOW
 const resultObj = JSON.stringify(
-  dependenciesGraph(path.join(__dirname, "INSERT SOURCE FILE HERE"))
+  dependenciesGraph(path.join(__dirname, "../../../INSERT SOURCE FILE HERE"))
 );
 // console.log(typeof resultObj);
 const componentObj = `const componentObj = ${resultObj}
-module.exports = { componentObj };`;
+module.exports = componentObj;`;
 
 fs.writeFileSync(
   path.join(__dirname, "./componentStore.js"),
@@ -238,3 +241,4 @@ fs.writeFileSync(
     console.log("The file has been saved");
   }
 );
+
