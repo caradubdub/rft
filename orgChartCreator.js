@@ -22,5 +22,3 @@ const orgChartCreator = (orgChart) => {
 export default orgChartCreator;
 
 
-
-
