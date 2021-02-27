@@ -1,13 +1,3 @@
-const dataReqArr = [
-  "fetch",
-  "axios",
-  "http",
-  "https",
-  "qwest",
-  "superagent",
-  "XMLHttpRequest",
-];
-
 const fiberwalker = (
   node,
   componentStore,
@@ -27,7 +17,7 @@ const fiberwalker = (
     this.name = name;
     this.children = [];
   }
-
+  console.log("component store", componentStore);
   if (node.child.sibling) {
     node = node.child.sibling;
     let name;
@@ -39,7 +29,8 @@ const fiberwalker = (
       name = "anon.";
     }
     const currentNode = { name, children: [] };
-    if (componentStore[name] !== undefined) {
+
+    if (componentStore !== undefined) {
       if (componentStore[name]) {
         //iterate through every entry and check request type
         const dataRequest = componentStore[name];
@@ -65,7 +56,7 @@ const fiberwalker = (
         name = "anon.";
       }
       const currentNode = { name, children: [] };
-      if (componentStore[name] !== undefined) {
+      if (componentStore !== undefined) {
         if (componentStore[name]) {
           //iterate through every entry and check request type
           const dataRequest = componentStore[name];
@@ -76,7 +67,6 @@ const fiberwalker = (
               };
             }
           }
-          treedata.children.push(currentNode);
         }
       }
       treedata.children.push(currentNode);
@@ -109,7 +99,7 @@ const fiberwalker = (
       name = "anon.";
     }
     const currentNode = { name, children: [] };
-    if (componentStore[name] !== undefined) {
+    if (componentStore !== undefined) {
       if (componentStore[name]) {
         //iterate through every entry and check request type
         const dataRequest = componentStore[name];
@@ -119,7 +109,6 @@ const fiberwalker = (
               containsFetch: `${dataRequest[key].reqType}`,
             };
           }
-          treedata.children.push(currentNode);
         }
       }
     }
